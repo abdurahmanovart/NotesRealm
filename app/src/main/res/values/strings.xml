@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NotesRealm</string>
+    <string name="add_category">Добаить категорию</string>
 </resources>
