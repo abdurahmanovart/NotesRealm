@@ -12,6 +12,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.github.abdurahmanovart.notesrealm.adapter.CustomPagerAdapter;
+import com.github.abdurahmanovart.notesrealm.manager.RealmManager;
+import com.github.abdurahmanovart.notesrealm.model.Category;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private CustomPagerAdapter mAdapter;
 
+    private Realm mRealm;
+
     private int mCount = 0;
 
     //region Activity lifecycle
@@ -27,8 +36,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAdapter = new CustomPagerAdapter(getSupportFragmentManager());
         initUI();
+        mAdapter = new CustomPagerAdapter(getSupportFragmentManager());
+        mRealm = new RealmManager(this).getRealm();
+        fullAdapter();
     }
 
     @Override
@@ -79,11 +90,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTablayout() {
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void addNewCategory() {
-        mAdapter.addFragment(BasicFragment.newInstance("Еitle " + mCount));
-        mCount++;
+        String categoryName = "Title "+mCount++;
+        mRealm.beginTransaction();
+        Category category = mRealm.createObject(Category.class);
+        category.setCategoryName(categoryName);
+        mRealm.commitTransaction();
+        fullAdapter();
+    }
+
+    private void fullAdapter() {
+        mAdapter.clear();
+        List<BasicFragment> fragments = new ArrayList<>();
+        for(Category category : mRealm.allObjects(Category.class)){
+          fragments.add(BasicFragment.newInstance(category.getCategoryName()));
+        }
+        mAdapter.addFragments(fragments);
+        mViewPager.setAdapter(mAdapter);
     }
 
     private void closeApp() {

@@ -13,7 +13,7 @@ import java.util.List;
  * @author Abdurakhmanov on 26.07.17
  */
 
-public class CustomPagerAdapter extends FragmentStatePagerAdapter{
+public class CustomPagerAdapter extends FragmentStatePagerAdapter {
 
     List<BasicFragment> mFragmentList;
 
@@ -37,7 +37,18 @@ public class CustomPagerAdapter extends FragmentStatePagerAdapter{
         return mFragmentList.get(position).getTitle();
     }
 
-    public void addFragment(BasicFragment fragment){
+    public void addFragment(BasicFragment fragment) {
         mFragmentList.add(fragment);
+        notifyDataSetChanged();
+    }
+
+    public void addFragments(List<BasicFragment> fragments) {
+        mFragmentList.addAll(fragments);
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        mFragmentList = null;
+        mFragmentList = new ArrayList<>();
     }
 }

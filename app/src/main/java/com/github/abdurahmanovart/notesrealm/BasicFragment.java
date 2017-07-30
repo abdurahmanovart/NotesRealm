@@ -20,8 +20,6 @@ public class BasicFragment extends Fragment {
     private TextView mTitleTextView;
     private String mTitle;
 
-
-
     public static Bundle newArgs(@NonNull String title){
         Bundle bundle = new Bundle();
         bundle.putString(EXTRA_TITLE_KEY,title);
