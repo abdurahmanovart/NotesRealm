@@ -186,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void deleteCategoryAtPosition(final int position) {
         mRealm.executeTransaction(new Realm.Transaction() {
-
             @Override
             public void execute(Realm realm) {
                 RealmResults<Category> rows = realm.where(Category.class)
