@@ -9,4 +9,5 @@
     <string name="create">Создать</string>
     <string name="cancel">Отмена</string>
     <string name="delete_category">Удаление категории</string>
+    <string name="create_note_question">Создать заметку?</string>
 </resources>
