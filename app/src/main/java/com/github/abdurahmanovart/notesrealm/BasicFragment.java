@@ -1,5 +1,6 @@
 package com.github.abdurahmanovart.notesrealm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -9,15 +10,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.github.abdurahmanovart.notesrealm.adapter.NoteAdapter;
 import com.github.abdurahmanovart.notesrealm.manager.RealmManager;
 import com.github.abdurahmanovart.notesrealm.model.Category;
 import com.github.abdurahmanovart.notesrealm.model.Note;
+import com.github.abdurahmanovart.notesrealm.ui.CreateNoteActivity;
 
 import io.realm.Realm;
 import io.realm.RealmList;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * @author Abdurakhmanov on 26.07.17
@@ -60,17 +63,23 @@ public class BasicFragment extends Fragment {
         mAddNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, getString(R.string.create_note_question), Snackbar.LENGTH_LONG)
+                Snackbar.make(v, getString(R.string.save_note_question), Snackbar.LENGTH_LONG)
                         .setAction(R.string.yes, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                //TODO: 16.07.17 go to new Activity to create note
-                                Toast.makeText(getContext(), "Переход на новую активити", Toast.LENGTH_LONG).show();
+                                startActivityForResult(CreateNoteActivity.createExplicitIntent(getContext(), mTitle),1);
                             }
-                        });
-
+                        }).show();
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK)
+                mAdapter.notifyDataSetChanged();
+        }
     }
 
     public String getTitle() {
