@@ -17,9 +17,12 @@ import io.realm.RealmList;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
+    private final NoteClickListener mNoteClickListener;
     private RealmList<Note> mNoteList;
 
-    public NoteAdapter(RealmList<Note> noteList) {
+    public NoteAdapter(NoteClickListener noteClickListener,
+                       RealmList<Note> noteList) {
+        mNoteClickListener = noteClickListener;
         mNoteList = noteList;
     }
 
@@ -41,7 +44,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         return mNoteList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView titleTextView;
         private TextView idTextView;
@@ -50,7 +53,17 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             super(itemView);
             titleTextView = (TextView) itemView.findViewById(R.id.title_text_view);
             idTextView = (TextView) itemView.findViewById(R.id.id_text_view);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            mNoteClickListener.onClick(getLayoutPosition());
+        }
+    }
+
+    public interface NoteClickListener {
+        void onClick(int position);
     }
 
 }
