@@ -22,10 +22,9 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
 
     private static final String EXTRA_CATEGORY_NAME = "extra_category_name";
     private static final String EXTRA_NOTE_TITLE = "extra_note_title";
-    private static final String EXTRA_NOTE_ID = "extra+note_id";
+    private static final String EXTRA_NOTE_ID = "extra_note_id";
     private static final String EXTRA_NOTE_BODY = "extra_note_body";
 
-    private String mCategoryName;
     private Toolbar mToolbar;
     private TextView mNoteTitleTextView;
     private TextView mNoteIdTextView;
@@ -33,11 +32,13 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton mEditNoteButton;
     private FloatingActionButton mDeleteNoteButton;
 
+    private String mCategoryName;
     private String mNoteTitle;
     private String mNoteId;
     private String mNoteBody;
 
     private Realm mRealm;
+    private boolean mNoteEdited;
 
     public static Intent createExplicitIntent(Context context,
                                               String categoryName,
@@ -64,10 +65,16 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+            finishActivity();
             return true;
+
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishActivity();
     }
 
     @Override
@@ -83,12 +90,39 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
                         }).show();
                 break;
             case R.id.edit_note_button:
-                //TODO 4.08.2017 edit button;
+                Snackbar.make(v, getString(R.string.edit_note_question), Snackbar.LENGTH_LONG)
+                        .setAction(R.string.yes, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                editNote();
+                            }
+                        }).show();
                 break;
         }
     }
 
-    public void getDataFromIntent() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                mNoteTitleTextView.setText(data.getStringExtra(EXTRA_NOTE_TITLE));
+                mNoteBodyTextView.setText(data.getStringExtra(EXTRA_NOTE_BODY));
+                mNoteEdited = true;
+            }
+        }
+    }
+
+    //region private methods
+
+    private void finishActivity() {
+        if (mNoteEdited) {
+            finishWithResultOk();
+        } else {
+            finish();
+        }
+    }
+
+    private void getDataFromIntent() {
         Bundle bundle = getIntent().getExtras();
         mCategoryName = bundle.getString(EXTRA_CATEGORY_NAME);
         mNoteTitle = bundle.getString(EXTRA_NOTE_TITLE);
@@ -139,4 +173,13 @@ public class NoteDetailActivity extends AppCompatActivity implements View.OnClic
         setResult(RESULT_OK, intent);
         finish();
     }
+
+    private void editNote() {
+        startActivityForResult(EditNoteActivity.createExplicitIntent(getApplicationContext(),
+                mNoteTitle,
+                mNoteId,
+                mNoteBody), 2);
+    }
+
+    //endregion
 }

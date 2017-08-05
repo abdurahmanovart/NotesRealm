@@ -18,4 +18,7 @@
     <string name="save_note_question">Сохранить?</string>
     <string name="note_details">Просмотр заметки</string>
     <string name="delete_note_question">Удалить заметку?</string>
+    <string name="edit_note_question">Редактировать заметку?</string>
+    <string name="edit_note">Редактировани заметки</string>
+    <string name="lose_edit_input_data">Введенные данные будут потеряны. Уверены, что хотите прервать редактирование?</string>
 </resources>

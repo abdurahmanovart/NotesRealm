@@ -104,8 +104,8 @@ public class CreateNoteActivity extends AppCompatActivity {
         }
     }
 
-    private boolean inputDataEmpty(){
-        return mTitleEditText.getText().length()==0&&mBodyEditText.getText().length()==0;
+    private boolean inputDataEmpty() {
+        return mTitleEditText.getText().length() == 0 && mBodyEditText.getText().length() == 0;
     }
 
     private void initUI() {
