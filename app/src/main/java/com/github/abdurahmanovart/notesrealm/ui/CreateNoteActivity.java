@@ -3,20 +3,13 @@ package com.github.abdurahmanovart.notesrealm.ui;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.github.abdurahmanovart.notesrealm.R;
-import com.github.abdurahmanovart.notesrealm.manager.RealmManager;
 import com.github.abdurahmanovart.notesrealm.model.Category;
 import com.github.abdurahmanovart.notesrealm.model.Note;
 
@@ -32,18 +25,7 @@ import io.realm.Realm;
  * @author Abdurakhmanov
  **/
 
-public class CreateNoteActivity extends AppCompatActivity {
-
-    private static final int INPUT_MIN_LENGTH = 3;
-    private static final String EXTRA_CATEGORY_NAME = "extra_category_name";
-
-    private Toolbar mToolbar;
-    private TextInputEditText mTitleEditText;
-    private TextInputEditText mBodyEditText;
-    private FloatingActionButton mCreateNoteButton;
-
-    private Realm mRealm;
-    private String mCategoryName;
+public class CreateNoteActivity extends BaseNoteActivity {
 
     public static Intent createExplicitIntent(Context context, String categoryName) {
         Intent intent = new Intent(context, CreateNoteActivity.class);
@@ -51,36 +33,15 @@ public class CreateNoteActivity extends AppCompatActivity {
         return intent;
     }
 
-    //region Activity lifecycle
+    //region protected methods
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_note);
-        initUI();
-        mRealm = new RealmManager(this).getRealm();
-        mCategoryName = getIntent().getExtras().getString(EXTRA_CATEGORY_NAME);
+    protected int getNoteIdVisibility() {
+        return View.INVISIBLE;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            closeActivity();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void onBackPressed() {
-        closeActivity();
-    }
-
-    //endregion
-
-    //region private methods
-
-    private void closeActivity() {
+    protected void handleActivityClosing() {
         if (inputDataEmpty()) {
             finish();
         } else {
@@ -104,35 +65,23 @@ public class CreateNoteActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void getDataFromIntent() {
+        mCategoryName = getIntent().getExtras().getString(EXTRA_CATEGORY_NAME);
+    }
+
+    @Override
+    protected void onMainButtonClick(View view) {
+        saveNote(view);
+    }
+
+    //endregion
+
+    //region private methods
+
     private boolean inputDataEmpty() {
-        return mTitleEditText.getText().length() == 0 && mBodyEditText.getText().length() == 0;
-    }
-
-    private void initUI() {
-        initToolbar();
-        initInputs();
-        initButton();
-    }
-
-    private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    private void initInputs() {
-        mTitleEditText = (TextInputEditText) findViewById(R.id.title_edit_text);
-        mBodyEditText = (TextInputEditText) findViewById(R.id.body_edit_text);
-    }
-
-    private void initButton() {
-        mCreateNoteButton = (FloatingActionButton) findViewById(R.id.quit_note_button);
-        mCreateNoteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveNote(view);
-            }
-        });
+        return mTitleEditText.getText().length() == 0 &&
+                mBodyEditText.getText().length() == 0;
     }
 
     private void saveNote(View view) {
@@ -157,18 +106,17 @@ public class CreateNoteActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Поля должны содержать минимум " + INPUT_MIN_LENGTH + " символов", Toast.LENGTH_LONG).show();
     }
 
-    @NonNull
+    private boolean InputDataCorrect() {
+        return mTitleEditText.getText().length() >= INPUT_MIN_LENGTH
+                && mBodyEditText.getText().length() >= INPUT_MIN_LENGTH;
+    }
+
     private Note fillNoteData() {
         Note note = new Note();
         note.setTitle(mTitleEditText.getText().toString());
         note.setBody(mBodyEditText.getText().toString());
         note.setId(new SimpleDateFormat("EEE, dd-MM-yyyy, HH:mm:ss", Locale.ENGLISH).format(new Date()));
         return note;
-    }
-
-    private boolean InputDataCorrect() {
-        return mTitleEditText.getText().length() >= INPUT_MIN_LENGTH
-                && mBodyEditText.getText().length() >= INPUT_MIN_LENGTH;
     }
 
     private void saveNoteToRealm(@NonNull final Note note) {
@@ -183,5 +131,4 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     //endregion
-
 }

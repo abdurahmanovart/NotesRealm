@@ -34,29 +34,64 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/body_input_layout"
+    <TextView
+        android:id="@+id/notes_id_text_view"
+        style="@style/Base.TextAppearance.AppCompat.Subhead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_input_layout"
-        android:padding="@dimen/padding_medium">
+        android:gravity="right"
+        android:padding="@dimen/padding_xsmall"
+        tools:text="notes id"/>
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/body_edit_text"
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/delete_note_button"
+        android:layout_below="@id/notes_id_text_view">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/body_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/note_body"
-            android:inputType="textMultiLine"/>
+            android:layout_below="@id/notes_id_text_view"
+            android:padding="@dimen/padding_medium">
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/body_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/note_body"
+                android:inputType="textMultiLine"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/quit_note_button"
+        android:id="@+id/delete_note_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/main_button"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_toLeftOf="@+id/main_button"
+        android:layout_toStartOf="@+id/main_button"
+        android:src="@android:drawable/ic_menu_delete"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/main_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/margin_xsmall"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:src="@android:drawable/ic_menu_save"/>
 
 </RelativeLayout>
