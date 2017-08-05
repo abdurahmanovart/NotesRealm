@@ -67,9 +67,13 @@ public class NoteDetailActivity extends BaseNoteActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
-                mTitleEditText.setText(data.getStringExtra(EXTRA_NOTE_TITLE));
-                mBodyEditText.setText(data.getStringExtra(EXTRA_NOTE_BODY));
+                String newTitle = data.getStringExtra(EXTRA_NOTE_TITLE);
+                String newBody = data.getStringExtra(EXTRA_NOTE_BODY);
+                mTitleEditText.setText(newTitle);
+                mBodyEditText.setText(newBody);
                 mNoteEdited = true;
+                mNoteTitle = newTitle;
+                mNoteBody = newBody;
             }
         }
     }
