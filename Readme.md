@@ -8,21 +8,21 @@ You can add category using plus button in the right-up corner of the screen
 
 Notes are saving by Realm
 
-![Category creating/deleting](http://imgur.com/a/ZbneN.gif)
+![Category creating/deleting](http://imgur.com/ZbneN.gif)
 
 You can add and manage notes in each category.
 
 When tapping a create note button, opens a dialog, when you need to input title and body for your note
 
-![Creating note](http://imgur.com/a/WMEyq.gif)
+![Creating note](http://imgur.com/WMEyq.gif)
 
 In editing note screen, you may set a new body and title for note
 
-![Editing note](http://imgur.com/a/mOJfO.gif)
+![Editing note](http://imgur.com/mOJfO.gif)
 
 You can delete your notes
 
-![Delete note](http://imgur.com/a/3bDkU.gif)
+![Delete note](http://imgur.com/3bDkU.gif)
 
 ___
 ## Libs, used in project
