@@ -3,7 +3,6 @@ package com.github.abdurahmanovart.notesrealm;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +19,7 @@ import com.github.abdurahmanovart.notesrealm.ui.NoteDetailActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -34,9 +34,6 @@ public class BasicFragment extends Fragment implements NoteAdapter.NoteClickList
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-
-    @BindView(R.id.add_note_button)
-    FloatingActionButton mAddNoteButton;
 
     private Unbinder mUnbinder;
     private NoteAdapter mAdapter;
@@ -66,18 +63,17 @@ public class BasicFragment extends Fragment implements NoteAdapter.NoteClickList
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setAdapter(mAdapter);
-        mAddNoteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v, getString(R.string.create_note_question), Snackbar.LENGTH_LONG)
-                        .setAction(R.string.yes, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                startActivityForResult(CreateNoteActivity.createExplicitIntent(getContext(), mTitle), 1);
-                            }
-                        }).show();
-            }
-        });
+    }
+
+    @OnClick(R.id.add_note_button)
+    public void onClick(View v) {
+        Snackbar.make(v, R.string.create_note_question, Snackbar.LENGTH_LONG)
+                .setAction(R.string.yes, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivityForResult(CreateNoteActivity.createExplicitIntent(getContext(), mTitle), 1);
+                    }
+                }).show();
     }
 
     @Override

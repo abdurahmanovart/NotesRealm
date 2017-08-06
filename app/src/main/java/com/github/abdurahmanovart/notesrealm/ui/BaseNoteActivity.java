@@ -58,8 +58,25 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
     protected String mNoteBody;
     protected Realm mRealm;
 
+    /**
+     * Define in inherited classes to handle logic before closing activity
+     */
+    protected abstract void handleActivityClosing();
+
+    /**
+     * Define in inherited classes to get data from intent
+     */
+    protected abstract void getDataFromIntent();
+
+    /**
+     * Define in inherited classes to handle main button click
+     *
+     * @param view View
+     */
+    protected abstract void onMainButtonClick(View view);
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_main);
         ButterKnife.bind(this);
@@ -98,21 +115,13 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
     //region protected methods
 
     /**
-     * Define in inherited classes to handle logic before closing activity
-     */
-    protected abstract void handleActivityClosing();
-
-    /**
-     * Define in inherited classes to get data from intent
-     */
-    protected abstract void getDataFromIntent();
-
-    /**
-     * Define in inherited classes to handle main button click
+     * Define in inherited classes to handle second button click event
      *
      * @param view View
      */
-    protected abstract void onMainButtonClick(View view);
+    protected void onSecondButtonClick(View view) {
+        //implements in inherited classes if needed
+    }
 
     /**
      * Redefine in inherited class if need to change visibility
@@ -121,15 +130,6 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
      */
     protected int getNoteIdVisibility() {
         return View.VISIBLE;
-    }
-
-    /**
-     * Define in inherited classes to handle second button click event
-     *
-     * @param view View
-     */
-    protected void onSecondButtonClick(View view) {
-        //implements in inherited classes if needed
     }
 
     /**
