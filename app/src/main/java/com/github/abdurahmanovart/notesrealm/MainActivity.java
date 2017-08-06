@@ -22,15 +22,23 @@ import com.github.abdurahmanovart.notesrealm.model.Category;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int MIN_CATEGORY_LENGTH = 3;
-    private Toolbar mToolbar;
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.tab_layout)
+    TabLayout mTabLayout;
+
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
     private CustomPagerAdapter mAdapter;
 
     private Realm mRealm;
@@ -40,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         initUI();
         mAdapter = new CustomPagerAdapter(getSupportFragmentManager());
         mRealm = new RealmManager(this).getRealm();
@@ -76,24 +85,9 @@ public class MainActivity extends AppCompatActivity {
     //region private methods
 
     private void initUI() {
-        initToolbar();
-        initViewPager();
-        initTablayout();
-    }
-
-    private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    private void initViewPager() {
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mViewPager.setAdapter(mAdapter);
-    }
-
-    private void initTablayout() {
-        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -190,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
             public void execute(Realm realm) {
                 RealmResults<Category> rows = realm.where(Category.class)
                         .equalTo("categoryName", mRealm.allObjects(Category.class)
-                        .get(position).getCategoryName()).findAll();
+                                .get(position).getCategoryName()).findAll();
                 rows.clear();
             }
         });

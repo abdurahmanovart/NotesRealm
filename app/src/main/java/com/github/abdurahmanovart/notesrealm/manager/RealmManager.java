@@ -9,15 +9,15 @@ import io.realm.RealmConfiguration;
  * @author Abdurakhmanov on 29.07.17
  */
 
-public class RealmManager  {
+public class RealmManager {
 
     private Realm mRealm;
 
     public RealmManager(Context context) {
-        mRealm  = Realm.getInstance(
+        mRealm = Realm.getInstance(
                 new RealmConfiguration.Builder(context)
-                .name("notesRealm.realm")
-                .build());
+                        .name("notesRealm.realm")
+                        .build());
     }
 
     public Realm getRealm() {

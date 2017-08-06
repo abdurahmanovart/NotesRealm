@@ -134,5 +134,5 @@ public class EditNoteActivity extends BaseNoteActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
+    //endregion
 }
-//endregion
