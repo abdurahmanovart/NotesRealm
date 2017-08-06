@@ -95,7 +95,7 @@ public class EditNoteActivity extends BaseNoteActivity {
     }
 
     private void showSnackBar(View view) {
-        Snackbar.make(view, getString(R.string.save_note_question), Snackbar.LENGTH_LONG)
+        Snackbar.make(view, R.string.save_note_question, Snackbar.LENGTH_LONG)
                 .setAction(R.string.yes, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

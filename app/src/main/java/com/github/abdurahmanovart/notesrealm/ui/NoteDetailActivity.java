@@ -113,6 +113,7 @@ public class NoteDetailActivity extends BaseNoteActivity {
 
     private void fillUIData() {
         mTitleEditText.setText(mNoteTitle);
+        mNoteIdTextView.setText(mNoteId);
         mBodyEditText.setText(mNoteBody);
     }
 

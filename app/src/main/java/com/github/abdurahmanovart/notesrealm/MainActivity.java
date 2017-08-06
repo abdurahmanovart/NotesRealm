@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
-    private CustomPagerAdapter mAdapter;
 
+    private CustomPagerAdapter mAdapter;
     private Realm mRealm;
 
     //region Activity lifecycle
@@ -100,7 +100,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (editText.getText().length() >= MIN_CATEGORY_LENGTH) {
-                            saveCategoryName(editText.getText().toString());
+                            saveCategoryName(editText.getText().toString().toLowerCase());
+                            fullAdapter();
                         } else {
                             Toast.makeText(getApplicationContext(), "Минимум " + MIN_CATEGORY_LENGTH + " символов", Toast.LENGTH_LONG).show();
                         }
@@ -121,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         for (Category category : mRealm.allObjects(Category.class)) {
             if (category.getCategoryName().toLowerCase().equals(categoryName.toLowerCase())) {
                 contains = true;
+                break;
             }
         }
         if (contains) {
@@ -130,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
             Category category = mRealm.createObject(Category.class);
             category.setCategoryName(categoryName);
             mRealm.commitTransaction();
-            fullAdapter();
         }
     }
 

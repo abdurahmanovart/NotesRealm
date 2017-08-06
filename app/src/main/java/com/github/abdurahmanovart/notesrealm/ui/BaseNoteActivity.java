@@ -56,7 +56,6 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
     protected String mNoteTitle;
     protected String mNoteId;
     protected String mNoteBody;
-
     protected Realm mRealm;
 
     @Override
@@ -101,13 +100,11 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
     /**
      * Define in inherited classes to handle logic before closing activity
      */
-
     protected abstract void handleActivityClosing();
 
     /**
      * Define in inherited classes to get data from intent
      */
-
     protected abstract void getDataFromIntent();
 
     /**
@@ -115,7 +112,6 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
      *
      * @param view View
      */
-
     protected abstract void onMainButtonClick(View view);
 
     /**
@@ -123,7 +119,6 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
      *
      * @return visibility of note id textview
      */
-
     protected int getNoteIdVisibility() {
         return View.VISIBLE;
     }
@@ -133,7 +128,6 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
      *
      * @param view View
      */
-
     protected void onSecondButtonClick(View view) {
         //implements in inherited classes if needed
     }
@@ -143,7 +137,6 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
      *
      * @return visibility of note id textview
      */
-
     protected int getSecondButtonVisibility() {
         return View.GONE;
     }
@@ -153,7 +146,6 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
      *
      * @return flag, true to be enabled or false
      */
-
     protected boolean isEditTextEnabled() {
         return true;
     }
@@ -163,7 +155,6 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
      *
      * @return drawable of the main button
      */
-
     @IdRes
     protected int getMainButtonImageResource() {
         return android.R.drawable.ic_menu_save;
@@ -173,24 +164,10 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
 
     //region private methods
 
-    private void initButtons() {
-        mSecondButton.setVisibility(getSecondButtonVisibility());
-        mMainButton.setImageResource(getMainButtonImageResource());
-    }
-
     private void initUI() {
         initToolbar();
         initViews();
         initButtons();
-    }
-
-    private void hideKeyBoard(boolean editTextFieldsEnabled) {
-        if (!editTextFieldsEnabled) {
-            InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            manager.hideSoftInputFromWindow(mTitleEditText.getWindowToken(), 0);
-            mTitleEditText.setFocusable(false);
-            mBodyEditText.setFocusable(false);
-        }
     }
 
     private void initToolbar() {
@@ -202,6 +179,20 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
         mNoteIdTextView.setVisibility(getNoteIdVisibility());
         mTitleEditText.setEnabled(isEditTextEnabled());
         mBodyEditText.setEnabled(isEditTextEnabled());
+    }
+
+    private void initButtons() {
+        mSecondButton.setVisibility(getSecondButtonVisibility());
+        mMainButton.setImageResource(getMainButtonImageResource());
+    }
+
+    private void hideKeyBoard(boolean editTextFieldsEnabled) {
+        if (!editTextFieldsEnabled) {
+            InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            manager.hideSoftInputFromWindow(mTitleEditText.getWindowToken(), 0);
+            mTitleEditText.setFocusable(false);
+            mBodyEditText.setFocusable(false);
+        }
     }
 
     //endregion

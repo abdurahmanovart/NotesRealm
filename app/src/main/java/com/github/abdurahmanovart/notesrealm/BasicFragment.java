@@ -32,7 +32,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class BasicFragment extends Fragment implements NoteAdapter.NoteClickListener {
 
-
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
@@ -40,12 +39,9 @@ public class BasicFragment extends Fragment implements NoteAdapter.NoteClickList
     FloatingActionButton mAddNoteButton;
 
     private Unbinder mUnbinder;
-
     private NoteAdapter mAdapter;
-
     private Realm mRealm;
     private String mTitle;
-    private RealmList<Note> mNotesRealm;
 
     public static BasicFragment newInstance() {
         return new BasicFragment();
@@ -73,7 +69,7 @@ public class BasicFragment extends Fragment implements NoteAdapter.NoteClickList
         mAddNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, getString(R.string.save_note_question), Snackbar.LENGTH_LONG)
+                Snackbar.make(v, getString(R.string.create_note_question), Snackbar.LENGTH_LONG)
                         .setAction(R.string.yes, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

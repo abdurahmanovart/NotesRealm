@@ -15,7 +15,7 @@ import java.util.List;
 
 public class CustomPagerAdapter extends FragmentStatePagerAdapter {
 
-    List<BasicFragment> mFragmentList;
+    private List<BasicFragment> mFragmentList;
 
     public CustomPagerAdapter(FragmentManager fm) {
         super(fm);
