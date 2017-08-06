@@ -27,8 +27,8 @@ You can delete your notes
 ___
 ## Libs, used in project
 
-Used Realm for saving Data 
+The Realm Platform delivers seamless realtime data synchronization, event handling, easy integrations, and massive crossplatform scalability, making it ideal for building reactive modern apps with compelling realtime features.
 https://realm.io/
 
-Used ButterKnife for binding 
+ButterKnife - Using Java annotations, makes Android development better by simplifying common tasks.
 http://jakewharton.github.io/butterknife/
