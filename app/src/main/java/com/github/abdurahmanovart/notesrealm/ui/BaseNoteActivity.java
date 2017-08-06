@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -36,14 +37,14 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.id_text_view)
-    TextView mNoteIdTextView;
-
     @BindView(R.id.title_edit_text)
-    TextView mTitleEditText;
+    TextInputEditText mTitleEditText;
 
     @BindView(R.id.body_edit_text)
-    TextView mBodyEditText;
+    TextInputEditText mBodyEditText;
+
+    @BindView(R.id.id_text_view)
+    TextView mNoteIdTextView;
 
     @BindView(R.id.main_button)
     FloatingActionButton mMainButton;

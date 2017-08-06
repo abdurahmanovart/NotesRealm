@@ -38,7 +38,7 @@ public class CreateNoteActivity extends BaseNoteActivity {
 
     @Override
     protected int getNoteIdVisibility() {
-        return View.INVISIBLE;
+        return View.GONE;
     }
 
     @Override
@@ -80,13 +80,8 @@ public class CreateNoteActivity extends BaseNoteActivity {
 
     //region private methods
 
-    private boolean inputDataEmpty() {
-        return mTitleEditText.getText().length() == 0 &&
-                mBodyEditText.getText().length() == 0;
-    }
-
     private void saveNote(View view) {
-        if (InputDataCorrect()) {
+        if (inputDataCorrect()) {
             Snackbar.make(view, R.string.create_note_question, Snackbar.LENGTH_LONG)
                     .setAction(R.string.yes, new View.OnClickListener() {
                         @Override
@@ -103,11 +98,16 @@ public class CreateNoteActivity extends BaseNoteActivity {
         }
     }
 
+    private boolean inputDataEmpty() {
+        return mTitleEditText.getText().length() == 0 &&
+                mBodyEditText.getText().length() == 0;
+    }
+
     private void showErrorMessage() {
         Toast.makeText(getApplicationContext(), "Поля должны содержать минимум " + INPUT_MIN_LENGTH + " символов", Toast.LENGTH_LONG).show();
     }
 
-    private boolean InputDataCorrect() {
+    private boolean inputDataCorrect() {
         return mTitleEditText.getText().length() >= INPUT_MIN_LENGTH
                 && mBodyEditText.getText().length() >= INPUT_MIN_LENGTH;
     }
