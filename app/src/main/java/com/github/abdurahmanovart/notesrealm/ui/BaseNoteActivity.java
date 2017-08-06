@@ -76,7 +76,7 @@ public abstract class BaseNoteActivity extends AppCompatActivity {
     protected abstract void onMainButtonClick(View view);
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_main);
         ButterKnife.bind(this);
