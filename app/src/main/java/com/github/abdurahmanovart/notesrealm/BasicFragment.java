@@ -18,6 +18,9 @@ import com.github.abdurahmanovart.notesrealm.model.Note;
 import com.github.abdurahmanovart.notesrealm.ui.CreateNoteActivity;
 import com.github.abdurahmanovart.notesrealm.ui.NoteDetailActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import io.realm.Realm;
 import io.realm.RealmList;
 
@@ -29,8 +32,15 @@ import static android.app.Activity.RESULT_OK;
 
 public class BasicFragment extends Fragment implements NoteAdapter.NoteClickListener {
 
-    private RecyclerView mRecyclerView;
-    private FloatingActionButton mAddNoteButton;
+
+    @BindView(R.id.recycler_view)
+    RecyclerView mRecyclerView;
+
+    @BindView(R.id.add_note_button)
+    FloatingActionButton mAddNoteButton;
+
+    private Unbinder mUnbinder;
+
     private NoteAdapter mAdapter;
 
     private Realm mRealm;
@@ -52,8 +62,7 @@ public class BasicFragment extends Fragment implements NoteAdapter.NoteClickList
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_basic, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mAddNoteButton = (FloatingActionButton) view.findViewById(R.id.add_note_button);
+        mUnbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -73,6 +82,12 @@ public class BasicFragment extends Fragment implements NoteAdapter.NoteClickList
                         }).show();
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
     }
 
     @Override

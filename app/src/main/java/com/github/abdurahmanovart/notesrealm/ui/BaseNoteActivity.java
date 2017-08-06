@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.github.abdurahmanovart.notesrealm.R;
 import com.github.abdurahmanovart.notesrealm.manager.RealmManager;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.realm.Realm;
 
 /**
@@ -22,7 +25,7 @@ import io.realm.Realm;
  * @author Abdurakhmanov 06.08.17
  */
 
-public abstract class BaseNoteActivity extends AppCompatActivity implements View.OnClickListener {
+public abstract class BaseNoteActivity extends AppCompatActivity {
 
     protected static final String EXTRA_CATEGORY_NAME = "extra_category_name";
     protected static final String EXTRA_NOTE_TITLE = "extra_note_title";
@@ -30,13 +33,23 @@ public abstract class BaseNoteActivity extends AppCompatActivity implements View
     protected static final String EXTRA_NOTE_BODY = "extra_note_body";
     protected static final int INPUT_MIN_LENGTH = 3;
 
-    protected Toolbar mToolbar;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
-    protected TextView mNoteIdTextView;
-    protected TextView mTitleEditText;
-    protected TextView mBodyEditText;
-    protected FloatingActionButton mMainButton;
-    protected FloatingActionButton mSecondButton;
+    @BindView(R.id.id_text_view)
+    TextView mNoteIdTextView;
+
+    @BindView(R.id.title_edit_text)
+    TextView mTitleEditText;
+
+    @BindView(R.id.body_edit_text)
+    TextView mBodyEditText;
+
+    @BindView(R.id.main_button)
+    FloatingActionButton mMainButton;
+
+    @BindView(R.id.delete_note_button)
+    FloatingActionButton mSecondButton;
 
     protected String mCategoryName;
     protected String mNoteTitle;
@@ -49,6 +62,7 @@ public abstract class BaseNoteActivity extends AppCompatActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_main);
+        ButterKnife.bind(this);
         mRealm = new RealmManager(this).getRealm();
         getDataFromIntent();
         initUI();
@@ -69,7 +83,7 @@ public abstract class BaseNoteActivity extends AppCompatActivity implements View
         handleActivityClosing();
     }
 
-    @Override
+    @OnClick({R.id.main_button, R.id.delete_note_button})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_button:
@@ -159,11 +173,7 @@ public abstract class BaseNoteActivity extends AppCompatActivity implements View
     //region private methods
 
     private void initButtons() {
-        mMainButton = (FloatingActionButton) findViewById(R.id.main_button);
-        mSecondButton = (FloatingActionButton) findViewById(R.id.delete_note_button);
         mSecondButton.setVisibility(getSecondButtonVisibility());
-        mMainButton.setOnClickListener(this);
-        mSecondButton.setOnClickListener(this);
         mMainButton.setImageResource(getMainButtonImageResource());
     }
 
@@ -183,15 +193,11 @@ public abstract class BaseNoteActivity extends AppCompatActivity implements View
     }
 
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void initViews() {
-        mTitleEditText = (TextView) findViewById(R.id.title_edit_text);
-        mBodyEditText = (TextView) findViewById(R.id.body_edit_text);
-        mNoteIdTextView = (TextView) findViewById(R.id.notes_id_text_view);
         mNoteIdTextView.setVisibility(getNoteIdVisibility());
         mTitleEditText.setEnabled(isEditTextEnabled());
         mBodyEditText.setEnabled(isEditTextEnabled());
