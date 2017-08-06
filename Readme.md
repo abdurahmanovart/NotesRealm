@@ -14,11 +14,11 @@ You can add and manage notes in each category.
 
 When tapping a create note button, opens a dialog, when you need to input title and body for your note
 
-![Creating note](http://i.imgur.com/2HRrx4a.gif)
+![Creating note](http://i.imgur.com/FuYsbYr.gif)
 
 In editing note screen, you may set a new body and title for note
 
-![Editing note](http://i.imgur.com/rcSLZPq.gif)
+![Editing note](http://i.imgur.com/8rTbUYN.gif)
 
 You can delete your notes
 
